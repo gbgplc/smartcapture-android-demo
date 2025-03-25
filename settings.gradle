@@ -1,0 +1,37 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "s3://maven-mobile-repo/releases"
+            credentials(AwsCredentials) {
+                accessKey awsAccessKey
+                secretKey awsSecretKey
+            }
+        }
+        maven {
+            url "s3://maven-mobile-repo/snapshots"
+            credentials(AwsCredentials) {
+                accessKey awsAccessKey
+                secretKey awsSecretKey
+            }
+        }
+        mavenLocal()
+    }
+}
+
+rootProject.name = "SmartCapture Android"
+include ':app'
+
+
+
+
+

@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">SmartCapture Android</string>
+    <string name="journey_button">Journey</string>
+    <string name="document_camera_button">Document Camera</string>
+    <string name="face_camera_button">Face Camera</string>
+    <string name="ozone_button">Ozone</string>
+    <string name="settings_button">Settings</string>
+    <string name="select_credentials">Select Credentials</string>
+    <string name="manage_credentials">Delete Existing Credentials</string>
+    <string name="new_credentials">Create New Credentials</string>
+    <string name="credential_warning">Credentials will be stored and backed up via Block Store by Google. This means credentials will persist between app installs. There is an option to manually enter credentials each time on the Journey page if you do not wish to save credentials this way.</string>
+    <string name="cant_be_blank">Can\'t be blank.</string>
+    <string name="smartcapture_journey_credentials">SmartCapture Journey Credentials</string>
+    <string name="does_not_match_expected_format">Does not match expected format.</string>
+    <string name="stored_credentials_successfully">Stored credentials successfully.</string>
+    <string name="failed_to_store_credentials">Failed to store credentials. Use manual credential entry.</string>
+    <string name="device_does_not_support_e2e_encryption">Device does not support e2e encryption, therefore credentials can\'t be saved. Adding a device passcode if none is present could fix this.</string>
+    <string name="credential_info">Credential will not be stored once the app leaves memory.</string>
+    <string name="added_credential_without_saving">Credential set up successfully, without saving to credential storage.</string>
+    <string name="no_credentials_were_retrieved">No credentials were retrieved.</string>
+    <string name="temporary_credentials">Temporary Credentials</string>
+    <string name="select_journey">Select Journey</string>
+    <string name="start_journey">Start Journey</string>
+    <string name="ok">@android:string/ok</string>
+    <string name="camera_permission_request_text">The camera is required to capture documents. If the permission has been declined you will need to manually go to the app settings to enable it.</string>
+    <string name="copy_encrypted_blob">Copy encrypted blob</string>
+    <string name="copy_face_blob">Copy unencrypted blob</string>
+    <string name="captured_face_image_alt_text">Preview photo of captured face image</string>
+    <string name="copy_explanation">Unfortunately, android apps can only copy small sizes to the clipboard at once, so the operation has to be split into parts. This will not impact end users as they would not need to copy/paste this data.</string>
+    <string name="user_canceled">User Canceled.</string>
+    <string name="error_title">Error</string>
+    <string name="copied_base64_string_to_clipboard">Copied base64 string to clipboard</string>
+    <string name="failed_to_copy_base64_string_to_clipboard">Failed to copy base64 string to clipboard</string>
+</resources>
