@@ -1,6 +1,6 @@
 # SmartCapture Android Demo/Sample Code
 
-Documentation can be found here: https://smartcapture-docs.idscan.cloud/android/docs/android/intro
+Documentation can be found here: https://smartcapture-docs.idscan.cloud/docs/android/intro
 
 # End User License Agreement (“EULA”)
 
