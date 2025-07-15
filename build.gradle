@@ -4,6 +4,7 @@ buildscript {
     ext.compose_version = '1.5.14'
     ext.lottie_version = '5.2.0'
     ext.camerax_version = '1.3.3'
+    ext.iad_version = '2.1.0'
 
     dependencies {
         classpath 'com.github.skhatri:gradle-s3-plugin:1.0.6'
@@ -51,5 +52,5 @@ def checkProperty(String propertyName, defaultValue) {
 allprojects {
     project.ext.set("versionCode", deployVersionCode)
     project.ext.set("versionName", deployVersionName)
-    group = 'com.gbgplc.idscan' // Maven Group ID for the artifact
+    group = 'com.gbg.smartcapture' // Maven Group ID for the artifact
 }

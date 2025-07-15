@@ -1,17 +1,24 @@
-package com.gbgplc.idscan.bigmagic.activities
+package com.gbg.smartcapture.bigmagic.activities
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,21 +26,28 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gbgplc.idscan.bigmagic.R
-import com.gbgplc.idscan.bigmagic.compositions.AppSelectionView
-import com.gbgplc.idscan.bigmagic.compositions.FaceResultView
-import com.gbgplc.idscan.bigmagic.compositions.SettingsView
-import com.gbgplc.idscan.bigmagic.compositions.VersionNumberView
-import com.gbgplc.idscan.commons.SmartCaptureException
-import com.gbgplc.idscan.commons.compositions.PreviewView
-import com.gbgplc.idscan.commons.theme.SmartCaptureUiTheme
-import com.gbgplc.idscan.facecamera.FaceCameraActivity
-import com.gbgplc.idscan.facecamera.models.FaceCameraResult
+import com.gbg.smartcapture.bigmagic.R
+import com.gbg.smartcapture.bigmagic.compositions.AppSelectionView
+import com.gbg.smartcapture.bigmagic.compositions.DocumentCameraResultView
+import com.gbg.smartcapture.bigmagic.compositions.FaceResultView
+import com.gbg.smartcapture.bigmagic.compositions.SettingsView
+import com.gbg.smartcapture.bigmagic.compositions.VersionNumberView
+import com.gbg.smartcapture.commons.SmartCaptureException
+import com.gbg.smartcapture.commons.compositions.PreviewView
+import com.gbg.smartcapture.commons.getInsetPadding
+import com.gbg.smartcapture.commons.theme.SmartCaptureUiTheme
+import com.gbg.smartcapture.documentcamera.DocumentCameraActivity
+import com.gbg.smartcapture.documentcamera.DocumentProcessingMetadata
+import com.gbg.smartcapture.documentcamera.DocumentProcessingState
+import com.gbg.smartcapture.documentcamera.DocumentScannerConfig
+import com.gbg.smartcapture.facecamera.FaceCameraActivity
+import com.gbg.smartcapture.facecamera.models.FaceCameraResult
 
 class RootActivity : ComponentActivity() {
 
@@ -41,15 +55,18 @@ class RootActivity : ComponentActivity() {
     private var destination = mutableStateOf ("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
 
         setContent {
             SmartCaptureUiTheme {
                 val dest = remember { destination }
 
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                Box(
+                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
                 ) {
                     RootScreen()
                 }
@@ -68,14 +85,15 @@ class RootActivity : ComponentActivity() {
     private fun RootScreen() {
         navController = rememberNavController()
 
+        val insetPadding = LocalLayoutDirection.current.getInsetPadding()
         Column (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(insetPadding)
         ) {
             Surface (
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(9f, fill = true)
-            ){
+            ) {
                 NavHost(
                     navController = navController,
                     modifier = Modifier.fillMaxSize(),
@@ -84,6 +102,7 @@ class RootActivity : ComponentActivity() {
                     composable(NavigationItem.LandingScreen.route) {
                         AppSelectionView(
                             onFaceCamera = ::onFaceCamera,
+                            onDocumentCamera = ::onDocumentCamera,
                             onSettings = ::onSettings,
                         )
                     }
@@ -99,6 +118,15 @@ class RootActivity : ComponentActivity() {
                             navController.popBackStack()
                         }
                     }
+                    composable(NavigationItem.DocumentCameraResultScreen.route) {
+                        documentCameraResult?.let {
+                            DocumentCameraResultView(
+                                result = it,
+                                metadata = documentCameraMetadata,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        } ?: navController.popBackStack()
+                    }
                 }
             }
             Surface (
@@ -109,6 +137,29 @@ class RootActivity : ComponentActivity() {
                 VersionNumberView()
             }
         }
+    }
+
+    private val documentCameraLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        when (result.resultCode) {
+            RESULT_OK -> {
+                documentCameraResult = DocumentCameraActivity.latestResult
+                documentCameraMetadata = DocumentCameraActivity.latestMetadata
+                destination.value = NavigationItem.DocumentCameraResultScreen.route
+            }
+            RESULT_CANCELED -> {
+                // Cancelled
+            }
+            else -> {
+                // Unexpected result
+            }
+        }
+    }
+
+    private fun onDocumentCamera() {
+        val intent = DocumentCameraActivity.getIntent(this, DocumentScannerConfig())
+        documentCameraLauncher.launch(intent)
     }
 
     private fun onFaceCamera() {
@@ -154,7 +205,7 @@ class RootActivity : ComponentActivity() {
                 AlertDialog.Builder(this)
                     .setTitle(getString(R.string.error_title))
                     .setMessage(error.message)
-                    .setIcon(com.gbgplc.idscan.facecamera.R.drawable.triangle)
+                    .setIcon(com.gbg.smartcapture.facecamera.R.drawable.triangle)
                     .show()
             }
         }
@@ -167,17 +218,21 @@ class RootActivity : ComponentActivity() {
     private enum class Screen {
         LANDING,
         SETTINGS,
-        FACE_RESULT
+        FACE_RESULT,
+        DOCUMENT_CAMERA_RESULT
     }
 
     private sealed class NavigationItem(val route: String) {
         data object LandingScreen : NavigationItem(Screen.LANDING.name)
         data object SettingsScreen : NavigationItem(Screen.SETTINGS.name)
         data object FaceResultScreen : NavigationItem(Screen.FACE_RESULT.name)
+        data object DocumentCameraResultScreen : NavigationItem(Screen.DOCUMENT_CAMERA_RESULT.name)
     }
 
     companion object {
         private var faceResult: FaceCameraResult? = null
+        private var documentCameraResult: DocumentProcessingState.Result? = null
+        private var documentCameraMetadata: DocumentProcessingMetadata? = null
     }
 
     @Preview(showBackground = true)

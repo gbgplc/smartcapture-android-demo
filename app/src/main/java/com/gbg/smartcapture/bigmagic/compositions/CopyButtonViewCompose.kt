@@ -1,4 +1,4 @@
-package com.gbgplc.idscan.bigmagic.compositions
+package com.gbg.smartcapture.bigmagic.compositions
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,8 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.content.ContextCompat
-import com.gbgplc.idscan.bigmagic.R
-import com.gbgplc.idscan.commons.compositions.components.PrimaryButton
+import com.gbg.smartcapture.bigmagic.R
+import com.gbg.smartcapture.commons.compositions.components.PrimaryButton
 
 @Composable
 fun CopyButtonView(buttonText: String, string: String) {

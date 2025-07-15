@@ -31,4 +31,21 @@
     <string name="error_title">Error</string>
     <string name="copied_base64_string_to_clipboard">Copied base64 string to clipboard</string>
     <string name="failed_to_copy_base64_string_to_clipboard">Failed to copy base64 string to clipboard</string>
+
+<!--    Document Result Screen-->
+    <string name="sample_app_download">Download</string>
+    <string name="sample_app_label_good">Good:</string>
+    <string name="sample_app_label_sharp">Sharp:</string>
+    <string name="sample_app_label_glare_free">Glare Free:</string>
+    <string name="sample_app_label_adequate_resolution">Adequate Resolution:</string>
+    <string name="sample_app_label_width">Width:</string>
+    <string name="sample_app_label_height">Height:</string>
+    <string name="sample_app_label_rotation">Rotation:</string>
+    <string name="sample_app_label_blurry_frame_count">Blurry Frame Count:</string>
+    <string name="sample_app_label_glare_frame_count">Glare Frame Count:</string>
+    <string name="sample_app_label_low_rez_frame_count">Low Rez Frame Count:</string>
+    <string name="sample_app_label_out_of_bounds_frame_count">Out of Bounds Frame Count</string>
+    <string name="sample_app_label_total_frame_count">Total Frame Count</string>
+    <string name="sample_app_label_has_disabled_autocapture">Has Disabled AutoCapture</string>
+    <string name="sample_app_label_capture_duration_sec">Capture Duration (sec)</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.gbgplc.idscan.bigmagic.compositions
+package com.gbg.smartcapture.bigmagic.compositions
 
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -26,8 +26,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gbgplc.idscan.bigmagic.R
-import com.gbgplc.idscan.facecamera.models.FaceCameraResult
+import com.gbg.smartcapture.bigmagic.R
+import com.gbg.smartcapture.facecamera.models.FaceCameraResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream

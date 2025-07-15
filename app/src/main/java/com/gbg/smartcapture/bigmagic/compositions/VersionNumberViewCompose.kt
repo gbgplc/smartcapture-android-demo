@@ -1,4 +1,4 @@
-package com.gbgplc.idscan.bigmagic.compositions
+package com.gbg.smartcapture.bigmagic.compositions
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gbgplc.idscan.bigmagic.BuildConfig
-import com.gbgplc.idscan.commons.compositions.PreviewView
+import com.gbg.smartcapture.bigmagic.BuildConfig
+import com.gbg.smartcapture.commons.compositions.PreviewView
 
 @Composable
 internal fun VersionNumberView() {
