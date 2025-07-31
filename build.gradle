@@ -4,7 +4,7 @@ buildscript {
     ext.compose_version = '1.5.14'
     ext.lottie_version = '5.2.0'
     ext.camerax_version = '1.3.3'
-    ext.iad_version = '2.1.0'
+    ext.iad_version = '2.4.1'
 
     dependencies {
         classpath 'com.github.skhatri:gradle-s3-plugin:1.0.6'
