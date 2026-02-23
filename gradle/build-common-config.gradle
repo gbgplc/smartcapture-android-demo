@@ -3,17 +3,17 @@
 ///////////////////////////////////
 
 android {
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
-        minSdk 24
-        targetSdk 35
+        minSdk = 24
+        targetSdk = 35
         versionCode deployVersionCode.toInteger()
         versionName deployVersionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
@@ -34,26 +34,29 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("release")
-            //todo this has been temporarily turned off for now
-//            minifyEnabled true
-            minifyEnabled false
+            minifyEnabled = true
+        }
+        releaseNoSigning {
+            initWith release
+            minifyEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
         }
         debug {
-            minifyEnabled false
+            minifyEnabled = false
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    lint {
+        abortOnError = true
+
+        //The following lint rules lead to crashes during lint process when left enabled
+        disable "AutoboxingStateCreation"
+        disable "MutableCollectionMutableState"
     }
     buildFeatures {
-        compose true
-        buildConfig true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        buildConfig = true
     }
 }

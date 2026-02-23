@@ -1,27 +1,37 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.9.24'
-    ext.compose_version = '1.5.14'
-    ext.lottie_version = '5.2.0'
-    ext.camerax_version = '1.3.3'
-    ext.iad_version = '2.4.1'
+    ext {
+        kotlin_version = '2.2.21'
+        compose_version = '1.5.14'
+        lottie_version = '6.7.1'
+        camerax_version = '1.3.3'
+        iad_version = '2.5.1'
+
+        //mjcs only
+        jacocoVersion = '0.8.1'
+    }
 
     dependencies {
         classpath 'com.github.skhatri:gradle-s3-plugin:1.0.6'
         classpath 'joda-time:joda-time:2.10.1'
-        classpath 'com.android.tools.build:gradle:8.7.3'
+        classpath 'com.android.tools.build:gradle:8.13.2'
         classpath 'org.jacoco:org.jacoco.core:0.8.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("org.jetbrains.kotlin.plugin.compose:org.jetbrains.kotlin.plugin.compose.gradle.plugin:$kotlin_version")
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
 
 
+
+        //mjcs only
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.9.10"
     }
 }
 
 plugins {
-    id 'com.android.application' version '8.7.3' apply false
+    id 'com.android.application' version '8.13.2' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
-    id 'com.android.library' version '8.7.3' apply false
+    id 'com.android.library' version '8.13.2' apply false
+    id 'org.jetbrains.kotlin.plugin.compose' version "$kotlin_version" apply false
 }
 
 ext {
@@ -37,6 +47,12 @@ ext {
     appKeyPath = checkProperty('appKeyPath', '../key.jks')
 }
 
+allprojects {
+    project.ext.set("versionCode", deployVersionCode)
+    project.ext.set("versionName", deployVersionName)
+    group = 'com.gbg.smartcapture' // Maven Group ID for the artifact
+}
+
 private static getTimeStamp() {
     return Calendar.getInstance().getTimeInMillis()
 }
@@ -47,10 +63,4 @@ def checkProperty(String propertyName, defaultValue) {
     } else {
         return defaultValue
     }
-}
-
-allprojects {
-    project.ext.set("versionCode", deployVersionCode)
-    project.ext.set("versionName", deployVersionName)
-    group = 'com.gbg.smartcapture' // Maven Group ID for the artifact
 }

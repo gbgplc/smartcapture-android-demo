@@ -2,35 +2,73 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.compose'
+
+
 }
 
 apply from: '../gradle/build-common-config.gradle'
 
-
-
-
 android {
-    namespace 'com.gbg.smartcapture.bigmagic'
+    namespace = 'com.gbg.smartcapture.bigmagic'
 
     defaultConfig {
-        applicationId "com.gbg.smartcapture.bigmagic"
+        applicationId = "com.gbg.smartcapture.bigmagic"
     }
 
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = compose_version
+    }
+}
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_1_8
+    }
 }
 
 dependencies {
+    //Misc
     implementation 'androidx.core:core-ktx:1.13.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
-    implementation 'androidx.activity:activity-compose:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    implementation 'androidx.datastore:datastore-preferences:1.2.0'
+    implementation 'androidx.datastore:datastore-preferences-core:1.2.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.2'
+
+    //Compose
     implementation platform('androidx.compose:compose-bom:2023.03.00')
+    implementation 'androidx.activity:activity-compose:1.9.0'
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.runtime:runtime-livedata'
     implementation 'androidx.navigation:navigation-compose:2.7.7'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    // MJCS
+    implementation 'com.gbg.smartcapture:mjcs:1.2.3'
+    implementation 'com.idscan.bento:logger:0.4'
+
+    //GBG Dependencies
+    implementation 'com.gbg.smartcapture:commons:1.2.3'
+    implementation 'com.gbg.smartcapture:facecamera:1.2.3'
+    implementation 'com.gbg.smartcapture:documentcamera:1.2.3'
+    implementation 'com.gbg.smartcapture:ozone:1.2.3'
+    implementation 'com.gbg.smartcapture:ozoneui:1.2.3'
+
+    //Innovolar
+    implementation 'com.readid:readid-ui-nfc:4.120.0'
+    implementation 'nl.innovalor.nfcjmrtd:iddoc-connector:4.120.0'
+
+    //Testing/Debugging
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -38,10 +76,5 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
-
-    implementation 'com.gbg.smartcapture:commons:1.1.2'
-    implementation 'com.gbg.smartcapture:facecamera:1.1.2'
-    implementation 'com.gbg.smartcapture:documentcamera:1.1.2'
-
 
 }

@@ -11,17 +11,17 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url "s3://maven-mobile-repo/releases"
+            url = "s3://maven-mobile-repo/releases"
             credentials(AwsCredentials) {
-                accessKey awsAccessKey
-                secretKey awsSecretKey
+                accessKey = awsAccessKey
+                secretKey = awsSecretKey
             }
         }
         maven {
-            url "s3://maven-mobile-repo/snapshots"
+            url = "s3://maven-mobile-repo/snapshots"
             credentials(AwsCredentials) {
-                accessKey awsAccessKey
-                secretKey awsSecretKey
+                accessKey = awsAccessKey
+                secretKey = awsSecretKey
             }
         }
         mavenLocal()
@@ -30,6 +30,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "SmartCapture Android"
 include ':app'
+
+
 
 
 

@@ -1,4 +1,4 @@
-package com.gbg.smartcapture.bigmagic.compositions
+package com.gbg.smartcapture.bigmagic.compositions.bits
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gbg.smartcapture.bigmagic.BuildConfig
-import com.gbg.smartcapture.commons.compositions.PreviewView
+import com.gbg.smartcapture.commons.compositions.GBGPreviewView
 
 @Composable
 internal fun VersionNumberView() {
@@ -35,7 +35,7 @@ internal fun VersionNumberView() {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    PreviewView {
+    GBGPreviewView {
         VersionNumberView()
     }
 }

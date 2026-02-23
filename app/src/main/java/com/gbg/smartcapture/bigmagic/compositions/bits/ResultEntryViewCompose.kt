@@ -1,4 +1,4 @@
-package com.gbg.smartcapture.bigmagic.compositions
+package com.gbg.smartcapture.bigmagic.compositions.bits
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

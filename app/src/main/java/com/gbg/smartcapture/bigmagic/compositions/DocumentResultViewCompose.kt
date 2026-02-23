@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gbg.smartcapture.bigmagic.R
+import com.gbg.smartcapture.bigmagic.compositions.bits.ResultEntryView
 import com.gbg.smartcapture.commons.compositions.components.PrimaryButton
 import com.gbg.smartcapture.documentcamera.DocumentProcessingMetadata
 import com.gbg.smartcapture.documentcamera.DocumentProcessingState
@@ -65,23 +66,65 @@ fun DocumentCameraResultView(
                             throw IllegalStateException("Context was null at a time when it can never be null. This should never get thrown.")
                         }
                     }
-                    ResultEntryView(stringResource(R.string.sample_app_label_good), result.image.isGood)
-                    ResultEntryView(stringResource(R.string.sample_app_label_sharp), result.image.isSharp)
-                    ResultEntryView(stringResource(R.string.sample_app_label_glare_free), result.image.isGlareFree)
-                    ResultEntryView(stringResource(R.string.sample_app_label_adequate_resolution), result.image.isAdequateDpi)
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_good),
+                        result.image.isGood
+                    )
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_sharp),
+                        result.image.isSharp
+                    )
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_glare_free),
+                        result.image.isGlareFree
+                    )
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_adequate_resolution),
+                        result.image.isAdequateDpi
+                    )
                     HorizontalDivider()
-                    ResultEntryView(stringResource(R.string.sample_app_label_width), result.image.width)
-                    ResultEntryView(stringResource(R.string.sample_app_label_height), result.image.height)
-                    ResultEntryView(stringResource(R.string.sample_app_label_rotation), result.image.rotation)
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_width),
+                        result.image.width
+                    )
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_height),
+                        result.image.height
+                    )
+                    ResultEntryView(
+                        stringResource(R.string.sample_app_label_rotation),
+                        result.image.rotation
+                    )
                     metadata?.let {
                         HorizontalDivider()
-                        ResultEntryView(stringResource(R.string.sample_app_label_blurry_frame_count), it.blurryFrameCount)
-                        ResultEntryView(stringResource(R.string.sample_app_label_glare_frame_count), it.glareFrameCount)
-                        ResultEntryView(stringResource(R.string.sample_app_label_low_rez_frame_count), it.lowResFrameCount)
-                        ResultEntryView(stringResource(R.string.sample_app_label_out_of_bounds_frame_count), it.documentBoundaryFrameCount)
-                        ResultEntryView(stringResource(R.string.sample_app_label_total_frame_count), it.processedFrameCount)
-                        ResultEntryView(stringResource(R.string.sample_app_label_has_disabled_autocapture), it.hasDisabledAutoCapture)
-                        ResultEntryView(stringResource(R.string.sample_app_label_capture_duration_sec), it.captureDuration.inWholeSeconds)
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_blurry_frame_count),
+                            it.blurryFrameCount
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_glare_frame_count),
+                            it.glareFrameCount
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_low_rez_frame_count),
+                            it.lowResFrameCount
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_out_of_bounds_frame_count),
+                            it.documentBoundaryFrameCount
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_total_frame_count),
+                            it.processedFrameCount
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_has_disabled_autocapture),
+                            it.hasDisabledAutoCapture
+                        )
+                        ResultEntryView(
+                            stringResource(R.string.sample_app_label_capture_duration_sec),
+                            it.captureDuration.inWholeSeconds
+                        )
                     }
                     HorizontalDivider()
                     Image(
