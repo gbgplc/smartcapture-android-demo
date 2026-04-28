@@ -153,9 +153,6 @@ class MockedRootViewModel: IRootViewModel {
     override fun setGeneralBaseUrl(url: String) {
     }
 
-    override fun initStorage() {
-    }
-
     override val settings: SettingsGroup
         get() = SettingsGroup(
             enableTokenAuth = MutableStateFlow(false).asStateFlow(),

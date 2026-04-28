@@ -36,7 +36,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.gbg.smartcapture.bigmagic.R
 import com.gbg.smartcapture.bigmagic.compositions.AppSelectionView
-import com.gbg.smartcapture.bigmagic.compositions.DocumentCameraResultView
 import com.gbg.smartcapture.bigmagic.compositions.FaceResultView
 import com.gbg.smartcapture.bigmagic.compositions.GenricFatalErrorView
 import com.gbg.smartcapture.bigmagic.compositions.OzoneDataInput
@@ -59,10 +58,6 @@ import com.gbg.smartcapture.commons.SmartCaptureException
 import com.gbg.smartcapture.commons.compositions.GBGPreviewView
 import com.gbg.smartcapture.commons.gbgGetInsetPadding
 import com.gbg.smartcapture.commons.theme.SmartCaptureUiTheme
-import com.gbg.smartcapture.documentcamera.DocumentCameraActivity
-import com.gbg.smartcapture.documentcamera.DocumentProcessingMetadata
-import com.gbg.smartcapture.documentcamera.DocumentProcessingState
-import com.gbg.smartcapture.documentcamera.DocumentScannerConfig
 import com.gbg.smartcapture.facecamera.FaceCameraActivity
 import com.gbg.smartcapture.facecamera.interfaces.FaceCameraSettingsBuilder.MovementStrictness
 import com.gbg.smartcapture.facecamera.models.FaceCameraResult
@@ -132,10 +127,6 @@ class RootActivity : ComponentActivity() {
     private fun RootScreen() {
         navController = rememberNavController()
 
-        LaunchedEffect(Unit) {
-            // Important to get key correct values from Settings storage
-            viewModel.initStorage()
-        }
         val credentialSet = viewModel.credentialSetState.collectAsStateWithLifecycle()
         val selectedCredential = viewModel.selectedCredential.collectAsStateWithLifecycle()
 
@@ -205,15 +196,6 @@ class RootActivity : ComponentActivity() {
                             Log.e("Sample App", "Result was null")
                             navController.popBackStack()
                         }
-                    }
-                    composable(NavigationItem.DocumentCameraResultScreen.route) {
-                        documentCameraResult?.let {
-                            DocumentCameraResultView(
-                                result = it,
-                                metadata = documentCameraMetadata,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        } ?: navController.popBackStack()
                     }
                     composable(NavigationItem.FatalError.route) {
                         GenricFatalErrorView(errorText ?: "Unknown Fatal Error")
@@ -377,8 +359,8 @@ class RootActivity : ComponentActivity() {
     }
 
     private fun onDocumentCamera() {
-        val intent = DocumentCameraActivity.getIntent(this, DocumentScannerConfig())
-        documentCameraLauncher.launch(intent)
+        val intent = Intent(this, SampleAppDocumentCameraActivity::class.java)
+        startActivity(intent)
     }
 
     private fun onSubmitCredential(
@@ -485,26 +467,6 @@ class RootActivity : ComponentActivity() {
 
     private fun onJourneyCanceledScreen() {
         navController.navigate(NavigationItem.JourneyCanceledScreen.route)
-    }
-
-    private val documentCameraLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                documentCameraResult = DocumentCameraActivity.latestResult
-                documentCameraMetadata = DocumentCameraActivity.latestMetadata
-                destination.value = NavigationItem.DocumentCameraResultScreen.route
-            }
-            RESULT_CANCELED -> {
-                Toast.makeText(this,
-                    getString(R.string.user_cancelled_document_capture), Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                // Unexpected result
-                Log.e("Root", "Document camera unexpected result")
-            }
-        }
     }
 
     private fun onMJCSJourney() {
@@ -630,7 +592,6 @@ class RootActivity : ComponentActivity() {
         JOURNEY_FAILED,
         JOURNEY_CANCELED,
         FACE_RESULT,
-        DOCUMENT_CAMERA_RESULT,
         FATAL_ERROR,
         OZONE_RESULT,
         OZONE_MANUAL_INPUT
@@ -640,7 +601,6 @@ class RootActivity : ComponentActivity() {
         data object LandingScreen : NavigationItem(Screen.LANDING.name)
         data object SettingsScreen : NavigationItem(Screen.SETTINGS.name)
         data object FaceResultScreen : NavigationItem(Screen.FACE_RESULT.name)
-        data object DocumentCameraResultScreen : NavigationItem(Screen.DOCUMENT_CAMERA_RESULT.name)
         data object OzoneManualInputScreen : NavigationItem(Screen.OZONE_MANUAL_INPUT.name)
         data object OzoneResultScreen : NavigationItem(Screen.OZONE_RESULT.name)
         data object FatalError : NavigationItem(Screen.FATAL_ERROR.name)
@@ -656,9 +616,7 @@ class RootActivity : ComponentActivity() {
 
     companion object {
         private var faceResult: FaceCameraResult? = null
-        private var documentCameraResult: DocumentProcessingState.Result? = null
         private var ozoneResult: OzoneResultData? = null
-        private var documentCameraMetadata: DocumentProcessingMetadata? = null
         private var errorText: String? = null
     }
 

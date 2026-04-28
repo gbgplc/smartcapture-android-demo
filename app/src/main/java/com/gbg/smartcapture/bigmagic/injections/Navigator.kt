@@ -9,8 +9,6 @@ import com.gbg.smartcapture.mjcs.customerJourney.LivenessLoadingFragment
 import com.gbgroup.idscan.bento.enterprice.ResponseUpload
 import com.gbgroup.idscan.bento.enterprice.journey.Action
 import com.gbgroup.idscan.bento.enterprice.journey.RequiredActionAttempted
-import com.idscan.mjcs.sample.customerjourney.CustomerJourneyCancelFragmentSample
-import com.idscan.mjcs.sample.customerjourney.CustomerJourneyLoadingFragmentSample
 
 class Navigator(private val injection: NavigatorInjection) : CustomerJourneyNavigator {
 

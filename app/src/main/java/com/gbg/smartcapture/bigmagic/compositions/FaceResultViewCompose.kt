@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gbg.smartcapture.bigmagic.R
+import com.gbg.smartcapture.commons.ImageQuality
 import com.gbg.smartcapture.commons.compositions.components.PrimaryButton
 import com.gbg.smartcapture.commons.compositions.components.SecondaryButton
 import com.gbg.smartcapture.facecamera.models.FaceCameraResult
@@ -99,7 +100,11 @@ private fun SaveButtons(faceCameraResult: FaceCameraResult) {
         stringResource(R.string.save_preview_photo)
     ) {
         val stream = ByteArrayOutputStream()
-        faceCameraResult.previewPhoto.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        faceCameraResult.previewPhoto.compress(
+            Bitmap.CompressFormat.JPEG,
+            ImageQuality.FACE_IMAGE_QUALITY_PERCENT,
+            stream
+        )
         val byteArray = stream.toByteArray()
 
         saveFile(

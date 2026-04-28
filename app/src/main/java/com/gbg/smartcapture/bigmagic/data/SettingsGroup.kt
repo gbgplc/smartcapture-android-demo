@@ -1,6 +1,7 @@
 package com.gbg.smartcapture.bigmagic.data
 
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.reflect.full.memberProperties
 
 data class SettingsGroup(
     val enableTokenAuth: StateFlow<Boolean>,
@@ -17,4 +18,12 @@ data class SettingsGroup(
     val enablePreScreenInjectionNfc: StateFlow<Boolean>,
     val enablePreScreenInjectionLoading: StateFlow<Boolean>,
     val enablePreScreenInjectionCancel: StateFlow<Boolean>,
-)
+) {
+
+    fun getStateFlows(): List<StateFlow<*>> =
+        this::class.memberProperties
+            .mapNotNull { prop ->
+                prop.getter.call(this) as? StateFlow<*>
+            }
+
+}

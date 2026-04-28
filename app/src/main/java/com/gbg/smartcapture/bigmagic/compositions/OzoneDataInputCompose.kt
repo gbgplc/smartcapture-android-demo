@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +37,12 @@ fun OzoneDataInput(passNumVal: String = "", dobVal: String = "", doeVal: String 
         OutlinedTextField (
             modifier = Modifier.padding(6.dp),
             value = passNum,
-            label = { Text(text = stringResource(R.string.pass_num_label)) },
+            label = {
+                Text(
+                    text = stringResource(R.string.pass_num_label),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
             keyboardOptions = KeyboardOptions(
                 autoCorrectEnabled = false,
                 capitalization = KeyboardCapitalization.Characters,
@@ -49,7 +55,12 @@ fun OzoneDataInput(passNumVal: String = "", dobVal: String = "", doeVal: String 
         OutlinedTextField (
             modifier = Modifier.padding(6.dp),
             value = dob,
-            label = { Text(text = stringResource(R.string.dob_label)) },
+            label = {
+                Text(
+                    text = stringResource(R.string.dob_label),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Next
@@ -61,7 +72,12 @@ fun OzoneDataInput(passNumVal: String = "", dobVal: String = "", doeVal: String 
         OutlinedTextField (
             modifier = Modifier.padding(6.dp),
             value = doe,
-            label = { Text(text = stringResource(R.string.doe_label)) },
+            label = {
+                Text(
+                    text = stringResource(R.string.doe_label),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done

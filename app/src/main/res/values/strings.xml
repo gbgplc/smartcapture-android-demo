@@ -53,7 +53,10 @@
     <string name="sample_app_label_blurry_frame_count">Blurry Frame Count:</string>
     <string name="sample_app_label_glare_frame_count">Glare Frame Count:</string>
     <string name="sample_app_label_low_rez_frame_count">Low Rez Frame Count:</string>
-    <string name="sample_app_label_out_of_bounds_frame_count">Out of Bounds Frame Count</string>
+    <string name="sample_app_label_high_rez_frame_count">Too Close Rez Frame Count:</string>
+    <string name="sample_app_label_not_aligned_frame_count">Not Aligned Frame Count:</string>
+    <string name="sample_app_label_not_parallel_frame_count">Not Parallel Frame Count:</string>
+    <string name="sample_app_label_out_of_bounds_frame_count">Out of Bounds Frame Count:</string>
     <string name="sample_app_label_total_frame_count">Total Frame Count</string>
     <string name="sample_app_label_has_disabled_autocapture">Has Disabled AutoCapture</string>
     <string name="sample_app_label_capture_duration_sec">Capture Duration (sec)</string>

@@ -32,7 +32,6 @@ interface IRootViewModel {
     val selectedJourney: StateFlow<JourneyDefinition?>
     val journeyCompleted: StateFlow<ResponseJourney?>
     val journeyError: StateFlow<CustomerJourneyError?>
-    fun initStorage()
     fun selectJourney(journeyDefinition: JourneyDefinition)
     fun setJourneyCompleted(responseJourney: ResponseJourney)
     fun setJourneyError(customerJourneyError: CustomerJourneyError)

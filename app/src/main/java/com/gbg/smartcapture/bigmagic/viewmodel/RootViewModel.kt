@@ -29,6 +29,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.reflect.KVisibility
+import kotlin.reflect.full.memberProperties
 
 class RootViewModel(application: Application): IRootViewModel, AndroidViewModel(application) {
 
@@ -89,18 +91,53 @@ class RootViewModel(application: Application): IRootViewModel, AndroidViewModel(
     private val _journeyError: MutableStateFlow<CustomerJourneyError?> = MutableStateFlow(null)
     override val journeyError: StateFlow<CustomerJourneyError?> = _journeyError
 
+    override val settings: SettingsGroup = SettingsGroup(
+        enableTokenAuth = getSettingSwitch(SettingsSwitch.ENABLE_TOKEN_AUTH),
+        manualCaptureToggle = getSettingSwitch(SettingsSwitch.MANUAL_CAPTURE_TOGGLE),
+        enableScreenshots = getSettingSwitch(SettingsSwitch.ENABLE_SCREENSHOTS),
+        enableTranslucentActivity = getSettingSwitch(SettingsSwitch.ENABLE_TRANSLUCENT_ACTIVITY),
+
+        enablePreScreenInjectionFront = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_FRONT),
+        enablePreScreenInjectionBack = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_BACK),
+        enablePreScreenInjectionPassiveLiveness = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_PASSIVE_LIVENESS),
+        enablePreScreenInjectionAddressDocument = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_ADDRESS_DOCUMENT),
+
+        enablePreScreenInjectionSelfie = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_SELFIE),
+        enablePreScreenInjectionNfc = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_NFC),
+        enablePreScreenInjectionLoading = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_LOADING),
+        enablePreScreenInjectionCancel = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_CANCEL),
+    )
+
+    init {
+        initStorage()
+    }
+
     // Important init collecting so that when code checks if in Token mode the value is correct
     // before and without need the UI does a collect as state
-    override fun initStorage() {
-        viewModelScope.launch {
-            settings.enableTokenAuth.collect {}
+    private fun initStorage() {
+        getStateFlows().forEach { stateFlow ->
+            viewModelScope.launch {
+                stateFlow.collect {}
+            }
         }
-        viewModelScope.launch {
-            tokenState.collect {}
+        settings.getStateFlows().forEach { stateFlow ->
+            viewModelScope.launch {
+                stateFlow.collect {}
+            }
         }
-        viewModelScope.launch {
-            generalBaseUrlState.collect {}
-        }
+    }
+
+    /**
+     * Get all public properties of type stateflow
+     */
+    private fun getStateFlows(): List<StateFlow<*>> {
+        return this::class.memberProperties
+            .filter { prop ->
+                prop.visibility == KVisibility.PUBLIC
+            }
+            .mapNotNull { prop ->
+                prop.getter.call(this) as? StateFlow<*>
+            }
     }
 
     override fun selectJourney(journeyDefinition: JourneyDefinition) {
@@ -394,22 +431,5 @@ class RootViewModel(application: Application): IRootViewModel, AndroidViewModel(
     override fun setJourneyError(customerJourneyError: CustomerJourneyError) {
         _journeyError.value = customerJourneyError
     }
-
-    override val settings: SettingsGroup = SettingsGroup(
-        enableTokenAuth = getSettingSwitch(SettingsSwitch.ENABLE_TOKEN_AUTH),
-        manualCaptureToggle = getSettingSwitch(SettingsSwitch.MANUAL_CAPTURE_TOGGLE),
-        enableScreenshots = getSettingSwitch(SettingsSwitch.ENABLE_SCREENSHOTS),
-        enableTranslucentActivity = getSettingSwitch(SettingsSwitch.ENABLE_TRANSLUCENT_ACTIVITY),
-
-        enablePreScreenInjectionFront = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_FRONT),
-        enablePreScreenInjectionBack = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_BACK),
-        enablePreScreenInjectionPassiveLiveness = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_PASSIVE_LIVENESS),
-        enablePreScreenInjectionAddressDocument = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_ADDRESS_DOCUMENT),
-
-        enablePreScreenInjectionSelfie = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_SELFIE),
-        enablePreScreenInjectionNfc = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_NFC),
-        enablePreScreenInjectionLoading = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_LOADING),
-        enablePreScreenInjectionCancel = getSettingSwitch(SettingsSwitch.ENABLE_PRESCREEN_INJECTION_CANCEL),
-    )
 
 }

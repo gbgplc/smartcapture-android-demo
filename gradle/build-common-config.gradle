@@ -34,11 +34,12 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("release")
-            minifyEnabled = true
+            //this is false to not minify the libraries as this can cause class name clashes. The
+            // app gradle overrides this and enabled minification at an app level.
+            minifyEnabled = false
         }
         releaseNoSigning {
             initWith release
-            minifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
         }
         debug {

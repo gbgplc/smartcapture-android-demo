@@ -120,6 +120,8 @@ fun SettingsView(
 
         ListDividerView()
 
+        //todo these currently only affect MJCS, should have it affect the sample app
+        // document camera too.
         SettingSwitchRow(
             settingsSwitch = SettingsSwitch.MANUAL_CAPTURE_TOGGLE,
             checked = enableManualCaptureToggle.value,

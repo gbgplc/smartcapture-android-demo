@@ -1,4 +1,4 @@
-package com.idscan.mjcs.sample.customerjourney
+package com.gbg.smartcapture.bigmagic.injections
 
 import android.os.Bundle
 import android.view.LayoutInflater

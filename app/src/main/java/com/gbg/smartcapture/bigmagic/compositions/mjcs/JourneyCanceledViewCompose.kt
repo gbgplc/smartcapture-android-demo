@@ -9,9 +9,13 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gbg.smartcapture.bigmagic.R
 import com.gbg.smartcapture.bigmagic.compositions.bits.HeadingView
+import com.gbg.smartcapture.commons.compositions.GBGPreviewView
 import com.gbg.smartcapture.mjcs.customerJourney.CustomerJourneyError
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun JourneyCanceledView(
@@ -30,13 +34,16 @@ fun JourneyCanceledView(
     }
 }
 
-/* todo
 @Composable
 @Suppress("unused")
 @Preview(showBackground = true)
-@Composable
 private fun Preview() {
-    PreviewView {
+    val error = CustomerJourneyError(code = 123, message = "Test Error", journeyId = "Journey321")
+    val journeyError: MutableStateFlow<CustomerJourneyError?> = MutableStateFlow(error)
+
+    GBGPreviewView {
+        JourneyCanceledView(
+            journeyError = journeyError.collectAsStateWithLifecycle(),
+        )
     }
 }
-*/

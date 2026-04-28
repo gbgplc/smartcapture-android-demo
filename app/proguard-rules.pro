@@ -21,7 +21,6 @@
                 InnerClasses,PermittedSubclasses,EnclosingMethod,
                 Deprecated,SourceFile,LineNumberTable
 
--repackageclasses 'com.idscan.mjcs.sample'
 -allowaccessmodification
 -keeppackagenames doNotKeepAThing
 
@@ -35,18 +34,6 @@
 # Doc Camera Related #
 ######################
 
--keepclasseswithmembernames,includedescriptorclasses class * { native <methods>; }
-
-###########################
-# Active Liveness Related #
-###########################
-
--keep public class com.idscan.idfb.liveness.models.*
--keep class com.idscan.idfb.liveness.models.*
--keep enum com.idscan.idfb.liveness.models.*
--keep public enum com.idscan.idfb.liveness.models.*
--keep public class com.idscan.idfb.liveness.Liveness { *; }
--keep class android.support.v8.renderscript.** { *; }
 -keepclasseswithmembernames,includedescriptorclasses class * { native <methods>; }
 
 ####################

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,10 +32,12 @@ fun ResultEntryView(label: String, value: String) {
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
+            color = MaterialTheme.colorScheme.onBackground,
             text = label
         )
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
+            color = MaterialTheme.colorScheme.onBackground,
             text = value
         )
     }

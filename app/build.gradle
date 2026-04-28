@@ -54,19 +54,19 @@ dependencies {
     implementation 'androidx.navigation:navigation-compose:2.7.7'
 
     // MJCS
-    implementation 'com.gbg.smartcapture:mjcs:1.2.3'
+    implementation 'com.gbg.smartcapture:mjcs:1.3.0'
     implementation 'com.idscan.bento:logger:0.4'
 
     //GBG Dependencies
-    implementation 'com.gbg.smartcapture:commons:1.2.3'
-    implementation 'com.gbg.smartcapture:facecamera:1.2.3'
-    implementation 'com.gbg.smartcapture:documentcamera:1.2.3'
-    implementation 'com.gbg.smartcapture:ozone:1.2.3'
-    implementation 'com.gbg.smartcapture:ozoneui:1.2.3'
+    implementation 'com.gbg.smartcapture:commons:1.3.0'
+    implementation 'com.gbg.smartcapture:facecamera:1.3.0'
+    implementation 'com.gbg.smartcapture:ozone:1.3.0'
+    implementation 'com.gbg.smartcapture:ozoneui:1.3.0'
+    implementation 'com.gbg.smartcapture:documentcamera:1.3.0'
 
     //Innovolar
-    implementation 'com.readid:readid-ui-nfc:4.120.0'
-    implementation 'nl.innovalor.nfcjmrtd:iddoc-connector:4.120.0'
+    implementation "com.readid:readid-ui-nfc:$readid_version"
+    implementation "nl.innovalor.nfcjmrtd:iddoc-connector:$readid_version"
 
     //Testing/Debugging
     testImplementation 'junit:junit:4.13.2'
