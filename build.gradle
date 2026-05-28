@@ -7,6 +7,7 @@ buildscript {
         camerax_version = '1.5.3'
         iad_version = '2.5.1'
         readid_version = '4.125.0'
+        stickman_version = '1.100.2'
 
         //mjcs only
         jacocoVersion = '0.8.1'
